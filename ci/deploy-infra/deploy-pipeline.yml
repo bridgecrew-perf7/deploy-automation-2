@@ -1,0 +1,37 @@
+resources:
+  - name: automation
+    type: git
+    source:
+      uri: https://github.com/chivince/deploy-automation.git
+      branch: master
+  - name: ci-image
+    type: registry-image
+    icon: docker
+    source: { repository: busybox }
+
+jobs:
+  - name: deploy
+    serial: true
+    plan:
+      - in_parallel:
+        - get: automation
+        - get: ci-image
+      - task: deploy
+        image: ci-image
+        params:
+          COLOR: BLUE
+          ENV_NAME: sandbox
+          VERSION:
+        config:
+          platform: linux
+          run:
+            path: sh
+            args:
+              - -ec
+              - |
+                sleep 2
+                echo "Color  : $COLOR"
+                sleep 2
+                echo "EnvName: $ENV_NAME"
+                sleep 2
+                echo "Version: $VERSION"
