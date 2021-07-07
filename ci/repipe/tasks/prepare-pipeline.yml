@@ -11,5 +11,8 @@ params:
   ENV_NAME:
 
 run:
-  path: bash
-  args: automation/ci/repipe/tasks/prepare-pipeline.sh
+  path: sh
+  args:
+    - -ec
+    - |
+      automation/ci/repipe/tasks/prepare-pipeline.sh
