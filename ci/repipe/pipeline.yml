@@ -25,6 +25,37 @@ jobs:
         file: automation/ci/deploy-infra/deploy-pipeline.yml
         vars:
           ENV_NAME: sandbox
+          source_branch: master
         var_files:
           - config/sandbox/settings.yml
+          - automation/ci/deploy-infra/config/versions.yml
+
+  - name: repipe-staging
+    plan:
+      - in_parallel:
+        - get: automation
+        - get: config
+        - get: ci-image
+      - set_pipeline: staging-pipeline
+        file: automation/ci/deploy-infra/deploy-pipeline.yml
+        vars:
+          ENV_NAME: staging
+          source_branch: staging
+        var_files:
+          - config/staging/settings.yml
+          - automation/ci/deploy-infra/config/versions.yml
+
+  - name: repipe-prod
+    plan:
+      - in_parallel:
+        - get: automation
+        - get: config
+        - get: ci-image
+      - set_pipeline: prod-pipeline
+        file: automation/ci/deploy-infra/deploy-pipeline.yml
+        vars:
+          ENV_NAME: prod
+          source_branch: prod
+        var_files:
+          - config/prod/settings.yml
           - automation/ci/deploy-infra/config/versions.yml

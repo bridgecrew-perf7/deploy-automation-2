@@ -3,7 +3,7 @@ resources:
     type: git
     source:
       uri: https://github.com/chivince/deploy-automation.git
-      branch: master
+      branch: ((source_branch))
   - name: config
     type: git
     source:
