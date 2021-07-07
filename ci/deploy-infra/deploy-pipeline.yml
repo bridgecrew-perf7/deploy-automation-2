@@ -4,6 +4,13 @@ resources:
     source:
       uri: https://github.com/chivince/deploy-automation.git
       branch: master
+      private_key: ((github-private-key))
+  - name: config
+    type: git
+    source:
+      uri: https://github.com/chivince/deploy-config.git
+      branch: master
+      private_key: ((github-private-key))
   - name: ci-image
     type: registry-image
     icon: docker
@@ -15,11 +22,12 @@ jobs:
     plan:
       - in_parallel:
         - get: automation
+        - get: config
         - get: ci-image
       - task: deploy
         image: ci-image
         params:
-          COLOR: BLUE
+          COLOR: ((color))
           ENV_NAME: sandbox
           VERSION: ((component-version))
         config:
