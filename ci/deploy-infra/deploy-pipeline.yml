@@ -21,7 +21,7 @@ jobs:
         params:
           COLOR: BLUE
           ENV_NAME: sandbox
-          VERSION:
+          VERSION: ((component-version))
         config:
           platform: linux
           run:
