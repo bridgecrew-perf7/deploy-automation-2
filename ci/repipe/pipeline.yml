@@ -13,6 +13,10 @@ resources:
     type: registry-image
     icon: docker
     source: { repository: busybox }
+  - name: image
+    type: registry-image
+    icon: docker
+    source: { repository: gstack/gk-ops }
 
 jobs:
   - name: repipe-sandbox
@@ -21,6 +25,14 @@ jobs:
         - get: automation
         - get: config
         - get: ci-image
+        - get: image
+      - task: prepare-pipeline
+        image: image
+        file: automation/ci/repipe/tasks/prepare-pipeline.yml
+        params:
+          ENV_NAME: sandbox
+        input_mapping:
+          automation: automation
       - set_pipeline: sandbox-pipeline
         file: automation/ci/deploy-infra/deploy-pipeline.yml
         vars:
@@ -37,6 +49,14 @@ jobs:
         - get: automation
         - get: config
         - get: ci-image
+        - get: image
+      - task: prepare-pipeline
+        image: image
+        file: staging-automation/ci/repipe/tasks/prepare-pipeline.yml
+        params:
+          ENV_NAME: staging
+        input_mapping:
+          automation: staging-automation
       - set_pipeline: staging-pipeline
         file: automation/ci/deploy-infra/deploy-pipeline.yml
         vars:
@@ -53,6 +73,14 @@ jobs:
         - get: automation
         - get: config
         - get: ci-image
+        - get: image
+      - task: prepare-pipeline
+        image: image
+        file: prod-automation/ci/repipe/tasks/prepare-pipeline.yml
+        params:
+          ENV_NAME: prod
+        input_mapping:
+          automation: prod-automation
       - set_pipeline: prod-pipeline
         file: automation/ci/deploy-infra/deploy-pipeline.yml
         vars:
