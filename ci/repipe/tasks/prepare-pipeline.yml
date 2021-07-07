@@ -1,14 +1,15 @@
 ---
 platform: linux
- 
+
 inputs:
   - name: automation
- 
+
 outputs:
   - name: prepared-pipeline
- 
+
 params:
   ENV_NAME:
- 
+
 run:
-  path: automation/ci/repipe/tasks/prepare-pipeline.sh
+  path: bash
+  args: automation/ci/repipe/tasks/prepare-pipeline.sh
