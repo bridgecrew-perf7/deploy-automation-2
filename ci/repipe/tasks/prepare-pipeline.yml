@@ -1,0 +1,27 @@
+resources:
+  - name: automation
+    type: git
+    source:
+      uri: https://github.com/chivince/deploy-automation.git
+      branch: ((source_branch))
+
+  - name: ci-image
+    type: registry-image
+    icon: docker
+    source: { repository: gstack/gk-ops }
+
+jobs:
+  - name: prepare-pipeline
+    serial: true
+    plan:
+      - in_parallel:
+        - get: automation
+        - get: ci-image
+      - task: deploy
+        image: ci-image
+        params:
+          ENV_NAME: ((env_name))
+        config:
+          platform: linux
+          run:
+            path: ./automation/ci/repipe/tasks/prepare-pipeline.sh

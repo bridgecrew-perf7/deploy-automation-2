@@ -24,7 +24,7 @@ jobs:
       - set_pipeline: sandbox-pipeline
         file: automation/ci/deploy-infra/deploy-pipeline.yml
         vars:
-          ENV_NAME: sandbox
+          env_name: sandbox
           next_env: staging
           source_branch: master
         var_files:
@@ -40,7 +40,7 @@ jobs:
       - set_pipeline: staging-pipeline
         file: automation/ci/deploy-infra/deploy-pipeline.yml
         vars:
-          ENV_NAME: staging
+          env_name: staging
           next_env: prod
           source_branch: staging
         var_files:
@@ -56,7 +56,7 @@ jobs:
       - set_pipeline: prod-pipeline
         file: automation/ci/deploy-infra/deploy-pipeline.yml
         vars:
-          ENV_NAME: prod
+          env_name: prod
           source_branch: prod
         var_files:
           - config/prod/settings.yml

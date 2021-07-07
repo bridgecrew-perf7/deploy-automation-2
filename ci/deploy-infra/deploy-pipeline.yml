@@ -26,7 +26,7 @@ jobs:
         image: ci-image
         params:
           COLOR: ((color))
-          ENV_NAME: sandbox
+          ENV_NAME: ((env_name))
           VERSION: ((component-version))
         config:
           platform: linux
