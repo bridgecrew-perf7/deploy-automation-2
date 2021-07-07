@@ -22,9 +22,9 @@ jobs:
         - get: config
         - get: ci-image
       - set_pipeline: sandbox-pipeline
-        file: ci/deploy_infra/deploy_pipeline.yml
+        file: automation/ci/deploy-infra/deploy-pipeline.yml
         vars:
           ENV_NAME: sandbox
         var_files:
           - config/sandbox/settings.yml
-          - automation/ci/config/versions.yml
+          - automation/ci/deploy-infra/config/versions.yml
